@@ -57,8 +57,20 @@ export class PokemonService {
   }
 
   async remove(id: string) {
-    const pokemon =  await this.findOne(id);
-    return await pokemon.deleteOne();
+    // Querying the db twice
+    // const pokemon =  await this.findOne(id);
+    // return await pokemon.deleteOne();
+
+    // Querying the db once, but no validating
+    // const deletedPokemon = await this.pokemonModel.findByIdAndDelete(id);
+    // return deletedPokemon;
+
+    // Querying the db once and validating
+    const { deletedCount } = await this.pokemonModel.deleteOne({ _id: id });
+    if (deletedCount === 0) {
+      throw new BadRequestException(`Pokemon with id "${id}" not found`);
+    }
+    return 'Pokemon deleted successfully';
   }
 
   private handleExceptions(error: any) {
