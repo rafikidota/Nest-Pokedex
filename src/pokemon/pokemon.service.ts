@@ -29,21 +29,21 @@ export class PokemonService {
 
   async findOne(query: string) {
     let pokemon: Pokemon;
-    if ( !isNaN(+query) ) {
+    if (!isNaN(+query)) {
       pokemon = await this.pokemonModel.findOne({ id_number: query });
     }
-    if ( !pokemon && isValidObjectId( query ) ) {
-      pokemon = await this.pokemonModel.findById( query );
+    if (!pokemon && isValidObjectId(query)) {
+      pokemon = await this.pokemonModel.findById(query);
     }
-    if ( !pokemon ) {
+    if (!pokemon) {
       pokemon = await this.pokemonModel.findOne({ name: query.toLowerCase().trim() })
     }
-    if ( !pokemon ) 
-      throw new NotFoundException(`Pokemon with id, name or no "${ query }" not found`);
+    if (!pokemon)
+      throw new NotFoundException(`Pokemon with id, name or no "${query}" not found`);
     return pokemon;
   }
 
-  update(id: number, updatePokemonDto: UpdatePokemonDto) {
+  update(id: string, updatePokemonDto: UpdatePokemonDto) {
     return `This action updates a #${id} pokemon`;
   }
 
@@ -52,10 +52,12 @@ export class PokemonService {
   }
 
   private handleExceptions(error: any) {
-    if (error.code === 11000) {
-      throw new BadRequestException(`There's a pokemon in db with ${JSON.stringify(error.keyValue)} already`);
+    switch (error.code) {
+      case 11000:
+        throw new BadRequestException(`There's a pokemon in db with ${JSON.stringify(error.keyValue)} already`);
+      default:
+        console.log(error);
+        throw new InternalServerErrorException(`Check server logs`);
     }
-    console.log(error);
-    throw new InternalServerErrorException(`Check server logs`);
   }
 }
