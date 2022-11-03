@@ -56,6 +56,6 @@ export class PokemonService {
       throw new BadRequestException(`There's a pokemon in db with ${JSON.stringify(error.keyValue)} already`);
     }
     console.log(error);
-    throw new InternalServerErrorException(`Can't create Pokemon - Check server logs`);
+    throw new InternalServerErrorException(`Check server logs`);
   }
 }
