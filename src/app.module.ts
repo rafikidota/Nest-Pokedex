@@ -5,6 +5,7 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PokemonModule } from './pokemon/pokemon.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { PokemonModule } from './pokemon/pokemon.module';
     }),
     MongooseModule.forRoot('mongodb://localhost:27017/pokedex'),
     PokemonModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
