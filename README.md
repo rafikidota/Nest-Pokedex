@@ -56,6 +56,11 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+
+```
+## Seed db
+```
+https://localhost:3000/api/seed
 ```
 
 ## Support
