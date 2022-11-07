@@ -58,6 +58,10 @@ $ npm run test:e2e
 $ npm run test:cov
 
 ```
+
+## env
+Clone file .env.template, rename to .env and fill variables
+
 ## Seed db
 ```
 https://localhost:3000/api/seed
